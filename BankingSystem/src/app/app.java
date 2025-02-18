@@ -1,8 +1,8 @@
 package app;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
-import app.BankSystem;
 
 public class app {
 
@@ -42,6 +42,7 @@ public class app {
 		BankSystem bank = new BankSystem(number, name, valorInicial);
 		// ========================================
 
+		clearConsole();
 		while (true) {
 			System.out.println("========= Menu ======");
 			System.out.println("(1) Visualizar Informações");
@@ -55,7 +56,8 @@ public class app {
 				bank.exibirDados();
 				System.out.print("Pressione enter para continuar...");
 				sc.nextLine();
-		
+				clearConsole();
+
 			} else if (menu == 2) {
 				System.out.print("Valor do depósito: ");
 				double valor = sc.nextDouble();
@@ -63,17 +65,20 @@ public class app {
 				bank.deposito(valor);
 				System.out.print("Pressione enter para continuar...");
 				sc.nextLine();
+				clearConsole();
 
 			} else if (menu == 3) {
 				System.out.print("Valor do Saque: ");
-				double valor  = sc.nextDouble();
+				double valor = sc.nextDouble();
 				sc.nextLine();
 				bank.saque(valor);
 				System.out.print("Pressione enter para continuar...");
 				sc.nextLine();
-				
-			}else if (menu == 4) {
+				clearConsole();
+
+			} else if (menu == 4) {
 				System.out.println("Saindo da operação");
+				clearConsole();
 				break;
 			}
 		}
@@ -82,4 +87,18 @@ public class app {
 		sc.close();
 	}
 
+	public static void clearConsole() {
+		{
+			try {
+				if (System.getProperty("os.name").contains("Windows")) {
+					new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+				} else {
+					System.out.print("\033[H\033[2J");
+					System.out.flush();
+				}
+			} catch (IOException | InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
